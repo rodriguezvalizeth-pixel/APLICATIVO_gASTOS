@@ -1,0 +1,11 @@
+{
+  "name": "Mi Finanzas - Control de Gastos",
+  "short_name": "Mi Finanzas",
+  "description": "Control local de ingresos y gastos personales",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#f3f7f8",
+  "theme_color": "#155e75",
+  "icons": [{"src":"icon.svg","sizes":"any","type":"image/svg+xml","purpose":"any maskable"}]
+}

@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#155e75">
+  <meta name="description" content="Control local de ingresos y gastos personales.">
+  <title>Mi Control de Gastos</title>
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="icon" href="icon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand"><span class="brand-mark">S/</span><div><strong>Mi Finanzas</strong><small>Control personal de gastos</small></div></div>
+    <button class="icon-button" id="exportBtn" title="Exportar movimientos" aria-label="Exportar movimientos">⇩</button>
+  </header>
+
+  <main class="container">
+    <section class="welcome">
+      <div><p class="eyebrow" id="currentMonth">RESUMEN DEL MES</p><h1>Hola, ¡bienvenido!</h1><p class="muted">Aquí tienes el estado de tus finanzas.</p></div>
+      <label class="month-picker"><span>Mes</span><input type="month" id="monthFilter"></label>
+    </section>
+
+    <section class="summary-grid" aria-label="Resumen financiero">
+      <article class="summary-card balance-card"><span>Balance del mes</span><strong id="balanceValue">S/ 0.00</strong><small>Ingresos menos gastos</small></article>
+      <article class="summary-card"><span>Ingresos</span><strong class="positive" id="incomeValue">S/ 0.00</strong><small>Dinero recibido</small></article>
+      <article class="summary-card"><span>Gastos</span><strong class="negative" id="expenseValue">S/ 0.00</strong><small>Dinero utilizado</small></article>
+    </section>
+
+    <section class="content-grid">
+      <article class="panel form-panel">
+        <div class="section-heading"><div><p class="eyebrow">MOVIMIENTOS</p><h2>Registrar movimiento</h2></div></div>
+        <form id="transactionForm">
+          <div class="type-switch" role="group" aria-label="Tipo de movimiento">
+            <button type="button" class="type-btn active" data-type="expense">− Gasto</button>
+            <button type="button" class="type-btn" data-type="income">＋ Ingreso</button>
+          </div>
+          <input type="hidden" id="type" value="expense">
+          <label>Descripción<input id="description" type="text" maxlength="60" placeholder="Ej. Compra del supermercado" required></label>
+          <div class="form-row">
+            <label>Monto (S/)<input id="amount" type="number" min="0.01" step="0.01" placeholder="0.00" required></label>
+            <label>Fecha<input id="date" type="date" required></label>
+          </div>
+          <label>Categoría
+            <select id="category" required></select>
+          </label>
+          <button class="primary-btn" type="submit" id="submitBtn">Guardar gasto</button>
+          <p class="form-note" id="formNote">Tus movimientos se guardan únicamente en este dispositivo.</p>
+        </form>
+      </article>
+
+      <article class="panel chart-panel">
+        <div class="section-heading"><div><p class="eyebrow">ANÁLISIS</p><h2>Gastos por categoría</h2></div></div>
+        <div id="categoryChart" class="category-chart"><div class="empty-state">Registra gastos para ver tu distribución.</div></div>
+        <div id="categoryLegend" class="legend"></div>
+      </article>
+    </section>
+
+    <section class="panel">
+      <div class="section-heading list-heading">
+        <div><p class="eyebrow">HISTORIAL</p><h2>Últimos movimientos</h2></div>
+        <div class="list-actions"><input id="searchInput" type="search" placeholder="Buscar..." aria-label="Buscar movimientos"><select id="typeFilter" aria-label="Filtrar por tipo"><option value="all">Todos</option><option value="expense">Gastos</option><option value="income">Ingresos</option></select></div>
+      </div>
+      <div class="table-wrap">
+        <table><thead><tr><th>Descripción</th><th>Categoría</th><th>Fecha</th><th>Monto</th><th></th></tr></thead><tbody id="transactionList"></tbody></table>
+      </div>
+      <div id="emptyList" class="empty-state">Todavía no tienes movimientos registrados.</div>
+    </section>
+
+    <section class="bottom-tools">
+      <div><strong>Tu información es privada</strong><p>Los datos se almacenan en el almacenamiento local de este navegador. No se envían a ningún servidor.</p></div>
+      <button class="text-btn" id="backupBtn">Descargar copia de seguridad</button>
+    </section>
+  </main>
+
+  <nav class="mobile-nav" aria-label="Navegación rápida">
+    <a href="#currentMonth">⌂<span>Resumen</span></a><a href="#transactionForm">＋<span>Registrar</span></a><a href="#categoryChart">◔<span>Reportes</span></a><a href="#transactionList">☷<span>Historial</span></a>
+  </nav>
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+  <script src="app.js"></script>
+</body>
+</html>
